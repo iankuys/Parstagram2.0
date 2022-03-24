@@ -12,18 +12,23 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
+    let myRefreshControl = UIRefreshControl()
+    
     var posts = [PFObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        myRefreshControl.addTarget(self, action: #selector(viewDidAppear), for: .valueChanged)
+        // Do any additional setup after loading the view.
+        tableView.refreshControl = myRefreshControl
+        
         tableView.delegate = self
         tableView.dataSource = self
 
-        // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+   @objc override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         let query = PFQuery(className:"Posts")
@@ -34,6 +39,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             (posts, error) in if posts != nil{
                 self.posts = posts!
                 self.tableView.reloadData()
+                self.myRefreshControl.endRefreshing()
             }
         }
     }
