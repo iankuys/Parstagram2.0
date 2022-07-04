@@ -2,7 +2,7 @@
 //  PostCell.swift
 //  Parstagram2.0
 //
-//  Created by Leia Ku on 3/24/22.
+//  Created by Ian Ku on 3/24/22.
 //
 
 import UIKit
